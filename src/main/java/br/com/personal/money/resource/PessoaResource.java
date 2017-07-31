@@ -17,35 +17,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.personal.money.event.RecursoCriadoEvent;
-import br.com.personal.money.model.Categoria;
-import br.com.personal.money.repository.CategoriaRepository;
+import br.com.personal.money.model.Pessoa;
+import br.com.personal.money.repository.PessoaRepository;
 import br.com.personal.money.util.ResourceUtil;
 
 @RestController
-@RequestMapping("/categorias")
-public class CategoriaResource {
-	
+@RequestMapping("/pessoas")
+public class PessoaResource {
+
 	@Autowired
-	private CategoriaRepository repository;
+	private PessoaRepository repository;
 	
 	@Autowired
 	private ApplicationEventPublisher publisher;
 	
 	@GetMapping
-	public List<Categoria> buscarTodos() {
+	public List<Pessoa> buscarTodos() {
 		return repository.findAll();
 	}
 	
 	@GetMapping("/{codigo}")
 	public ResponseEntity<?> buscarPorCodigo(@PathVariable Long codigo) {
-		Categoria categoria = repository.findOne(codigo);
-		return ResourceUtil.getResponseOkOrNotFound(categoria);
+		Pessoa pessoa = repository.findOne(codigo);
+		return ResourceUtil.getResponseOkOrNotFound(pessoa);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Categoria> salvar(@Valid @RequestBody Categoria categoria, HttpServletResponse response) {
-		repository.save(categoria);
-		publisher.publishEvent(new RecursoCriadoEvent(this, response, categoria.getCodigo()));
-		return ResponseEntity.status(HttpStatus.CREATED).body(categoria);
+	public ResponseEntity<Pessoa> salvar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response) {
+		repository.save(pessoa);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, pessoa.getCodigo()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(pessoa);
 	}
+	
 }

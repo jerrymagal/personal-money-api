@@ -2,28 +2,34 @@ package br.com.personal.money.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "categoria")
-public class Categoria extends BasicEntity implements Serializable {
+@Table(name = "pessoa")
+public class Pessoa extends BasicEntity implements Serializable {
 
-	private static final long serialVersionUID = -5074048515006320665L;
+	private static final long serialVersionUID = -4226369485756616121L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 
 	@NotBlank
-	@Size(min=3, max=20)
 	private String nome;
+
+	@NotNull
+	private Boolean ativo;
+
+	@Embedded
+	private Endereco endereco;
 
 	public Long getCodigo() {
 		return codigo;
@@ -39,6 +45,22 @@ public class Categoria extends BasicEntity implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	@Override
@@ -57,7 +79,7 @@ public class Categoria extends BasicEntity implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Pessoa other = (Pessoa) obj;
 		if (codigo == null) {
 			if (other.codigo != null)
 				return false;
@@ -68,6 +90,7 @@ public class Categoria extends BasicEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Categoria [codigo=" + codigo + ", nome=" + nome + "]";
+		return "Pessoa [codigo=" + codigo + ", nome=" + nome + ", ativo=" + ativo + ", endereco=" + endereco + "]";
 	}
+
 }

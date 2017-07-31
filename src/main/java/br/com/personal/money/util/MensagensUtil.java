@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.FieldError;
 
 @Component
-public class MensagensUtil {
+public final class MensagensUtil {
 	
 	private static MessageSource staticMessageSource;
 	private static final Locale locale = LocaleContextHolder.getLocale();
@@ -25,5 +26,9 @@ public class MensagensUtil {
 	
 	public static String getMessage(String key) {
 		return staticMessageSource.getMessage(key, null, locale);
+	}
+
+	public static String getMessage(FieldError error) {
+		return staticMessageSource.getMessage(error, locale);
 	}
 }
