@@ -31,6 +31,7 @@ public class Pessoa extends BasicEntity implements Serializable {
 	@Embedded
 	private Endereco endereco;
 
+	@Override
 	public Long getCodigo() {
 		return codigo;
 	}

@@ -26,3 +26,22 @@ INSERT INTO pessoa (nome, ativo, logradouro, numero, complemento, bairro, cep, c
 INSERT INTO pessoa (nome, ativo, logradouro, numero, complemento, bairro, cep, cidade, estado) 
 	VALUES ('Teresa Rolim', true, 'Rua Balanita', '66', 'apto 301', 'Benfica', '20222360', 'Rio de Janeiro', 'RJ');
 	
+INSERT INTO pessoa (nome, ativo, logradouro, numero, complemento, bairro, cep, cidade, estado) 
+	VALUES ('Maria Gueivara', true, 'Rua Senador Vergueiro', '148', 'apto 1201', 'Flamengo', '22230001', 'Rio de Janeiro', 'RJ');
+	
+INSERT INTO pessoa (nome, ativo, logradouro, numero, complemento, bairro, cep, cidade, estado) 
+	VALUES ('Urias de Castro', true, 'Rua Senador Vergueiro', '148', 'apto 1201', 'Flamengo', '22230001', 'Rio de Janeiro', 'RJ');
+	
+INSERT INTO pessoa (nome, ativo, logradouro, numero, complemento, bairro, cep, cidade, estado) 
+	VALUES ('Jorge Almeida', true, 'Rua Balanita', '66', 'apto 301', 'Benfica', '20222360', 'Rio de Janeiro', 'RJ');
+	
+INSERT INTO pessoa (nome, ativo, logradouro, numero, complemento, bairro, cep, cidade, estado) 
+	VALUES ('Felipe Joe Rolim', true, 'Rua Balanita', '66', 'apto 301', 'Benfica', '20222360', 'Rio de Janeiro', 'RJ');
+	
+INSERT INTO pessoa (nome, ativo, logradouro, numero, complemento, bairro, cep, cidade, estado) 
+	VALUES ('Riquinho', true, 'Rua Cândido Mendes', '16', 'apto 1003', 'Glória', '20241220', 'Rio de Janeiro', 'RJ');
+	
+INSERT INTO pessoa (nome, ativo, logradouro, numero, complemento, bairro, cep, cidade, estado) 
+	VALUES ('Lindinha', true, 'Rua Cândido Mendes', '16', 'apto 1003', 'Glória', '20241220', 'Rio de Janeiro', 'RJ');
+	
+	

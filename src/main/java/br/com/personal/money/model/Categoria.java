@@ -25,6 +25,7 @@ public class Categoria extends BasicEntity implements Serializable {
 	@Size(min=3, max=20)
 	private String nome;
 
+	@Override
 	public Long getCodigo() {
 		return codigo;
 	}

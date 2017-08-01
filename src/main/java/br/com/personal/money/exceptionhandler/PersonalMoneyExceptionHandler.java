@@ -26,7 +26,7 @@ public class PersonalMoneyExceptionHandler extends ResponseEntityExceptionHandle
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 
 		String mensagemUsuario = MensagensUtil.getMessage("mensagem.invalida");
-		String mensagemDesenvolvedor = ex.getCause().toString();
+		String mensagemDesenvolvedor = ex.getCause() != null ? ex.getCause().toString() : ex.toString();
 		
 		List<Erro> listaErros = criarListaErros(null);
 		listaErros.add(new Erro(mensagemUsuario, mensagemDesenvolvedor));
