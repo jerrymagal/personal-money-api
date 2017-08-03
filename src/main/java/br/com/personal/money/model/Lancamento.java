@@ -14,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.personal.money.enums.TipoLancamento;
 
@@ -27,6 +30,7 @@ public class Lancamento extends BasicEntity implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long codigo;
 	
+	@NotBlank
 	private String descricao;
 	
 	@Column(name="data_vencimento")
@@ -35,19 +39,23 @@ public class Lancamento extends BasicEntity implements Serializable {
 	@Column(name="data_pagamento")
 	private LocalDate dataPagamento;
 
+	@NotNull
 	private BigDecimal valor;
 	
 	private String observacao;
 	
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	private TipoLancamento tipo;
 	
 	@ManyToOne
 	@JoinColumn(name="codigo_categoria")
+	@NotNull
 	private Categoria categoria;
 	
 	@ManyToOne
 	@JoinColumn(name="codigo_pessoa")
+	@NotNull
 	private Pessoa pessoa;
 
 	public Long getCodigo() {

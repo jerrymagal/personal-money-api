@@ -29,7 +29,9 @@ public abstract class GenericService<T extends BasicEntity, Serializable> {
 	}
 	
 	public T buscarPorCodigo(Long codigo) {
-		return repository.findOne(codigo);
+		T t = repository.findOne(codigo);
+		verificarExistenciaEntidade(t);
+		return t;
 	}
 	
 	public T salvar(T t, HttpServletResponse response) {

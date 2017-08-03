@@ -3,6 +3,8 @@ package br.com.personal.money.exceptionhandler;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,7 +19,11 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import br.com.personal.money.util.MensagensUtil;
-
+/**
+ * Classe criada para capturar exceções gerais da Aplicação
+ * @author alexandreg.rolim
+ *
+ */
 @ControllerAdvice
 public class PersonalMoneyExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -52,7 +58,16 @@ public class PersonalMoneyExceptionHandler extends ResponseEntityExceptionHandle
 		List<Erro> listaErros = criarListaErros(null);
 		listaErros.add(new Erro(mensagemUsuario, mensagemDesenvolvedor));
 		return handleExceptionInternal(ex, listaErros, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+	}
+	
+	@ExceptionHandler({DataIntegrityViolationException.class})
+	public ResponseEntity<?> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
+		String mensagemUsuario = MensagensUtil.getMessage("recurso-operacao-nao-permitida");
+		String mensagemDesenvolvedor = ExceptionUtils.getRootCauseMessage(ex);
 		
+		List<Erro> listaErros = criarListaErros(null);
+		listaErros.add(new Erro(mensagemUsuario, mensagemDesenvolvedor));
+		return handleExceptionInternal(ex, listaErros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
 	
 	private List<Erro> criarListaErros(BindingResult result) {
