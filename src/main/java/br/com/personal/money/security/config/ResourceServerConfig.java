@@ -1,4 +1,4 @@
-package br.com.personal.money.config;
+package br.com.personal.money.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
