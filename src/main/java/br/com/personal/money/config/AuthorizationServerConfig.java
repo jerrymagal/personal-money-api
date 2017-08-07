@@ -26,7 +26,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			   .secret("@ngul@r0") // senha do cliente
 			   .scopes("read", "write") // o que o cliente pode fazer
 			   .authorizedGrantTypes("password", "refresh_token") // tipo de Grant type
-			   .accessTokenValiditySeconds(20)
+			   .accessTokenValiditySeconds(1800)
 			   .refreshTokenValiditySeconds(3600*24); // validade do refresh token em segundos
 	}
 	
