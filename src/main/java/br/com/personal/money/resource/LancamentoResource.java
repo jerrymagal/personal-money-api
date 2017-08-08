@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.personal.money.model.Lancamento;
 import br.com.personal.money.model.filter.LancamentoFilter;
+import br.com.personal.money.model.projection.ResumoLancamento;
 import br.com.personal.money.security.util.Roles;
 import br.com.personal.money.service.LancamentoService;
 import br.com.personal.money.util.ResourceUtil;
@@ -35,6 +36,12 @@ public class LancamentoResource {
 	@PreAuthorize(Roles.ROLE_PESQUISAR_LANCAMENTO)
 	public Page<Lancamento> pesquisar(LancamentoFilter filter, Pageable pageable) {
 		return service.filtrar(filter, pageable);
+	}
+
+	@GetMapping(params = "resumo")
+	@PreAuthorize(Roles.ROLE_PESQUISAR_LANCAMENTO)
+	public Page<ResumoLancamento> resumir(LancamentoFilter filter, Pageable pageable) {
+		return service.resumir(filter, pageable);
 	}
 	
 	@GetMapping("/{codigo}")

@@ -1,4 +1,4 @@
-package br.com.personal.money;
+package br.com.personal.money.security.config;
 
 import java.io.IOException;
 
@@ -11,15 +11,19 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import br.com.personal.money.config.PersonalMoneyProperty;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
 	
-	private String origemPermitida = "http://localhost:8000"; // TODO: Configurar para diferentes ambientes
+	@Autowired
+	private PersonalMoneyProperty property;
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {}
@@ -31,10 +35,10 @@ public class CorsFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) resp;
 	
-		response.setHeader("Acess-Control-Allow-Origin", origemPermitida);
+		response.setHeader("Acess-Control-Allow-Origin", property.getOrigemPermitida());
 		response.setHeader("Acess-Control-Allow-Credentials", "true");
 		
-		if("OPTIONS".equals(request.getMethod()) && origemPermitida.equals(request.getHeader("Origin"))) {
+		if("OPTIONS".equals(request.getMethod()) && property.getOrigemPermitida().equals(request.getHeader("Origin"))) {
 			response.setHeader("Acess-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
 			response.setHeader("Acess-Control-Allow-Headers", "Authorization, Content-Type, Accept");
 			response.setHeader("Acess-Control-Max-Age", "3600");

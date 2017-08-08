@@ -4,6 +4,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -16,8 +17,13 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+import br.com.personal.money.config.PersonalMoneyProperty;
+
 @ControllerAdvice
 public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2AccessToken>{
+	
+	@Autowired
+	private PersonalMoneyProperty property;
 
 	@Override
 	public OAuth2AccessToken beforeBodyWrite(OAuth2AccessToken accessToken, MethodParameter parameter, MediaType mediaType,
@@ -40,7 +46,7 @@ public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2Acces
 		Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
 		
 		refreshCookie.setHttpOnly(true);
-		refreshCookie.setSecure(false); // TODO: mudar para true em producao
+		refreshCookie.setSecure(property.getSeguranca().isEnableHttps());
 		refreshCookie.setPath(request.getContextPath() + "/oauth/token");
 		refreshCookie.setMaxAge(2592000);
 	
