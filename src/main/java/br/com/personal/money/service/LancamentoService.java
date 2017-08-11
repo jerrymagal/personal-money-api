@@ -2,6 +2,7 @@ package br.com.personal.money.service;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,16 +29,37 @@ public class LancamentoService extends GenericService<Lancamento, Long> {
 
 	@Override
 	public Lancamento salvar(Lancamento lancamento, HttpServletResponse response) {
-		
-		Pessoa pessoa = pessoaRepository.findOne(lancamento.getPessoa().getCodigo());
-		
-		if(pessoa == null || pessoa.isInativo()) {
-			throw new PessoaInexistenteOuInativaExcpetion();
-		}
-		
+		validarPessoa(lancamento);
 		return super.salvar(lancamento, response);
 	}
 	
+	@Override
+	public Lancamento atualizar(Long codigo, Lancamento lancamento) {
+		
+		Lancamento lancamentoBanco = buscarPorCodigo(codigo);
+		verificarExistenciaEntidade(lancamentoBanco);
+
+		if(lancamento.getPessoa().equals(lancamentoBanco.getPessoa())) {
+			validarPessoa(lancamento);
+		}
+		
+		BeanUtils.copyProperties(lancamento, lancamentoBanco, "codigo");
+		
+		return getRepository().save(lancamentoBanco);
+	}
+	
+	private void validarPessoa(Lancamento lancamento) {
+
+		Pessoa pessoa = null;
+		Long codigoPessoa = lancamento.getPessoa().getCodigo();
+		
+		if(codigoPessoa != null) {
+			pessoa = pessoaRepository.findOne(codigoPessoa);
+		}
+		
+		verificarExistenciaPessoa(pessoa);
+	}
+
 	public Page<Lancamento> filtrar(LancamentoFilter filter, Pageable pageable) {
 		LancamentoRepository repository = (LancamentoRepository) getRepository();
 		return repository.filtrar(filter, pageable);
@@ -48,4 +70,9 @@ public class LancamentoService extends GenericService<Lancamento, Long> {
 		return repository.resumir(filter, pageable);
 	}
 
+	private void verificarExistenciaPessoa(Pessoa pessoa) {
+		if(pessoa == null || pessoa.isInativo()) {
+			throw new PessoaInexistenteOuInativaExcpetion();
+		}
+	}
 }

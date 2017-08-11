@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.personal.money.event.RecursoCriadoEvent;
 import br.com.personal.money.model.BasicEntity;
@@ -24,10 +25,12 @@ public abstract class GenericService<T extends BasicEntity, Serializable> {
 		this.repository = repository;
 	}
 	
+	@Transactional(readOnly=true)
 	public List<T> buscarTodos() {
 		return repository.findAll();
 	}
 	
+	@Transactional(readOnly=true)
 	public T buscarPorCodigo(Long codigo) {
 		T t = repository.findOne(codigo);
 		verificarExistenciaEntidade(t);

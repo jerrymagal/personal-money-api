@@ -42,6 +42,12 @@ public class PessoaResource {
 	public ResponseEntity<?> buscarPorCodigo(@PathVariable Long codigo) {
 		return ResourceUtil.getResponseOkOrNotFound(service.buscarPorCodigo(codigo));
 	}
+
+	@GetMapping(params="nome")
+	@PreAuthorize(Roles.ROLE_PESQUISAR_PESSOA)
+	public ResponseEntity<?> buscarPorNome(String nome) {
+		return ResourceUtil.getResponseOkOrNotFound(service.findByNomeLike(nome));
+	}
 	
 	@PostMapping
 	@PreAuthorize(Roles.ROLE_CADASTRAR_PESSOA)
