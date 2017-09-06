@@ -42,7 +42,8 @@ public class LancamentoResource {
 	@GetMapping(params = "resumo")
 	@PreAuthorize(Roles.ROLE_PESQUISAR_LANCAMENTO)
 	public Page<ResumoLancamento> resumir(LancamentoFilter filter, Pageable pageable) {
-		return service.resumir(filter, pageable);
+		Page<ResumoLancamento> resumir = service.resumir(filter, pageable);
+		return resumir;
 	}
 	
 	@GetMapping("/{codigo}")

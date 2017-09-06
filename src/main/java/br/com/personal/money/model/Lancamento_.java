@@ -1,6 +1,7 @@
 package br.com.personal.money.model;
 
 import br.com.personal.money.enums.TipoLancamento;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.annotation.Generated;

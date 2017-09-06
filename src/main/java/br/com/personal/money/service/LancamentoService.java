@@ -14,6 +14,7 @@ import br.com.personal.money.model.filter.LancamentoFilter;
 import br.com.personal.money.model.projection.ResumoLancamento;
 import br.com.personal.money.repository.LancamentoRepository;
 import br.com.personal.money.repository.PessoaRepository;
+import br.com.personal.money.repository.specification.LancamentoSpecification;
 import br.com.personal.money.service.exception.PessoaInexistenteOuInativaExcpetion;
 
 @Service
@@ -61,15 +62,20 @@ public class LancamentoService extends GenericService<Lancamento, Long> {
 	}
 
 	public Page<Lancamento> filtrar(LancamentoFilter filter, Pageable pageable) {
-		LancamentoRepository repository = (LancamentoRepository) getRepository();
-		return repository.filtrar(filter, pageable);
+		LancamentoSpecification lancamentoSpecification = new LancamentoSpecification(filter);
+		return getRepository().findAll(lancamentoSpecification, pageable);
 	}
 
 	public Page<ResumoLancamento> resumir(LancamentoFilter filter, Pageable pageable) {
-		LancamentoRepository repository = (LancamentoRepository) getRepository();
-		return repository.resumir(filter, pageable);
+		LancamentoSpecification lancamentoSpecification = new LancamentoSpecification(filter);
+		return getRepository().findAll(lancamentoSpecification, ResumoLancamento.class, pageable);
 	}
-
+	
+	@Override
+	protected LancamentoRepository getRepository() {
+		return (LancamentoRepository) super.getRepository();
+	}
+		
 	private void verificarExistenciaPessoa(Pessoa pessoa) {
 		if(pessoa == null || pessoa.isInativo()) {
 			throw new PessoaInexistenteOuInativaExcpetion();
