@@ -63,12 +63,12 @@ public class LancamentoService extends GenericService<Lancamento, Long> {
 
 	public Page<Lancamento> filtrar(LancamentoFilter filter, Pageable pageable) {
 		LancamentoSpecification lancamentoSpecification = new LancamentoSpecification(filter);
-		return getRepository().findAll(lancamentoSpecification, pageable);
+		return getRepository().findAll(lancamentoSpecification.build(), pageable);
 	}
 
 	public Page<ResumoLancamento> resumir(LancamentoFilter filter, Pageable pageable) {
 		LancamentoSpecification lancamentoSpecification = new LancamentoSpecification(filter);
-		return getRepository().findAll(lancamentoSpecification, ResumoLancamento.class, pageable);
+		return getRepository().findAll(lancamentoSpecification.build(), ResumoLancamento.class, pageable);
 	}
 	
 	@Override
