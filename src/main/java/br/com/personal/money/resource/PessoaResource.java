@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.personal.money.model.Pessoa;
+import br.com.personal.money.model.filter.PessoaFilter;
 import br.com.personal.money.security.util.Roles;
 import br.com.personal.money.service.PessoaService;
 import br.com.personal.money.util.ResourceUtil;
@@ -35,6 +38,12 @@ public class PessoaResource {
 	@PreAuthorize(Roles.ROLE_PESQUISAR_PESSOA)
 	public List<Pessoa> buscarTodos() {
 		return service.buscarTodos();
+	}
+	
+	@GetMapping("/filtrar")
+	@PreAuthorize(Roles.ROLE_PESQUISAR_PESSOA)
+	private Page<Pessoa> pesquisar(PessoaFilter filter, Pageable pageable) {
+		return service.filtrar(filter, pageable);
 	}
 	
 	@GetMapping("/{codigo}")
